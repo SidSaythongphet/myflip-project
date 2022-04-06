@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authorized
+  skip_before_action :authorized, only: [:server]
 
   def server
     render json: { server: 'myFlip' }
