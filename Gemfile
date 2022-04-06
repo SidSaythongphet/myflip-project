@@ -47,3 +47,8 @@ group :development do
 end
 
 gem "active_model_serializers", "~> 0.10.13"
+gem 'aws-sdk-s3', '~> 1.113'
+gem 'dotenv-rails', groups: [:development, :test]
+gem "jwt", "~> 2.3"
+gem "byebug", "~> 11.1"
+gem "faker", "~> 2.20"
