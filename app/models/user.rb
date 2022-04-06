@@ -1,4 +1,5 @@
 class User < ApplicationRecord
-  has_one_attached :profile_picture
+  include ActiveModel::SecurePassword
   has_secure_password
+  has_one_attached :profile_picture
 end
