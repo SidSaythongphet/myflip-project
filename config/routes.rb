@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :show, :create, :destroy]
     resources :comments, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
+    resources :followships, only: [:create, :destroy]
     get '/', to: 'application#server'
     post '/signup', to: 'users#create'
     post '/login', to: 'authenticate#create'

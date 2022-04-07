@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import { baseURL } from '../../Globals';
 import UserInfoContainer from './UserInfoContainer';
 import UsersPostContainer from './UsersPostContainer';
@@ -23,10 +23,7 @@ const DashboardPage = ({ currentUser, onUpdateUser, onDeletePost }) => {
       }
     }
 
-    // if (currentUser.id) {
-      fetchData()
-    // }
-
+    fetchData()
   }, [])
 
   const handleDeleteUsersPost = (deletedPost) => {

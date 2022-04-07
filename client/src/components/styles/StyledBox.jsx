@@ -8,7 +8,7 @@ const StyledBox = ({ children, height, width = '100%' }) => {
       sx={{ 
         width, 
         height,
-        margin: '25px',
+        margin: '10px',
         bgcolor: 'background.paper', 
         borderRadius:'15px', 
         padding: '25px',
