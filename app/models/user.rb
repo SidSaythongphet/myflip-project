@@ -2,6 +2,7 @@ class User < ApplicationRecord
   include ActiveModel::SecurePassword
   has_secure_password
   has_one_attached :profile_picture
+  has_many :posts, dependent: :destroy
 
   validates_presence_of :first_name, :last_name, :username, :email 
   validates_uniqueness_of :username, :email, case_sensitive: false

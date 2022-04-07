@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   
   scope :api do
-    resources :users
+    resources :users, only: [:index, :create, :update, :destroy]
+    resources :users, only: [:show] do
+      resources :posts, only: [:index]
+    end
+    resources :posts, only: [:index, :show, :create, :destroy]
     get '/', to: 'application#server'
     post '/signup', to: 'users#create'
     post '/login', to: 'authenticate#create'

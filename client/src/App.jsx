@@ -69,7 +69,6 @@ const App = () => {
     setCurrentUser(user)
   }
 
-
   return (
     <ThemeProvider theme={theme}>
       <Router>
