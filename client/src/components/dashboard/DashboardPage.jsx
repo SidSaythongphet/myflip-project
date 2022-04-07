@@ -4,7 +4,7 @@ import { baseURL } from '../../Globals';
 import UserInfoContainer from './UserInfoContainer';
 import UsersPostContainer from './UsersPostContainer';
 
-const DashboardPage = ({ currentUser, onUpdateUser }) => {
+const DashboardPage = ({ currentUser, onUpdateUser, onDeletePost }) => {
   const [usersPosts, setUsersPosts] = useState([])
 
   useEffect(() => {
@@ -29,6 +29,12 @@ const DashboardPage = ({ currentUser, onUpdateUser }) => {
 
   }, [])
 
+  const handleDeleteUsersPost = (deletedPost) => {
+    const updatePosts = usersPosts.filter(post => post.id !== deletedPost.id)
+    setUsersPosts(updatePosts)
+    onDeletePost(deletedPost)
+  }
+
   return (
     <Container>
       <Grid container spacing={2}>
@@ -36,7 +42,7 @@ const DashboardPage = ({ currentUser, onUpdateUser }) => {
           <UserInfoContainer currentUser={ currentUser } onUpdateUser={ onUpdateUser }/>
         </Grid>
         <Grid item xs={12} container justifyContent="center">
-          <UsersPostContainer usersPosts={ usersPosts } currentUser={ currentUser }/>
+          <UsersPostContainer usersPosts={ usersPosts } currentUser={ currentUser } onDeletePost={ handleDeleteUsersPost }/>
         </Grid>
       </Grid>
     </Container>

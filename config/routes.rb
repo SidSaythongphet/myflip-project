@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :likes
   
   scope :api do
     resources :users, only: [:index, :create, :update, :destroy]
@@ -8,6 +7,7 @@ Rails.application.routes.draw do
     end
     resources :posts, only: [:index, :show, :create, :destroy]
     resources :comments, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
     get '/', to: 'application#server'
     post '/signup', to: 'users#create'
     post '/login', to: 'authenticate#create'

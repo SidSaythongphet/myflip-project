@@ -103,7 +103,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={ <Home /> } />
           <Route path='/posts' element={ <PostPage posts={ posts } currentUser={ currentUser } onDeletePost={ handleDeletePost } /> } />
-          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } /> }/>
+          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } onDeletePost={ handleDeletePost }/> }/>
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
           <Route path='/newpost' element={ <CreatePost currentUser={ currentUser } onNewPost={ handleNewPost } /> } />

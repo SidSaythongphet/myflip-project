@@ -16,6 +16,7 @@ import DeletePostButton from './DeletePostButton';
 import { Grid } from '@mui/material';
 import AddComment from '../comment/AddComment';
 import CommentContainer from '../comment/CommentContainer';
+import LikeButton from './LikeButton';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props
@@ -34,6 +35,7 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
   const [expandComment, setExpandComment] = useState(false)
   const [checked, setChecked] = useState(false)
   const [comments, setComments] = useState(post.comments)
+  const [likes, setLikes] = useState(post.likes)
 
   const handleAddComment = comment => {
     setComments([...comments, comment])
@@ -55,6 +57,15 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
 
   const handleExpandComment = () => {
     setExpandComment(!expandComment);
+  }
+
+  const handleLike = (like) => {
+    setLikes([...likes, like])
+  }
+
+  const handleUnlike = () => {
+    const updateLikes = likes.filter(like => like.user_id !== currentUser.id)
+    setLikes(updateLikes)
   }
 
   return (
@@ -83,6 +94,7 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
           inputProps={{ 'aria-label': 'controlled' }}
         />  
         <CardActions disableSpacing>
+        <LikeButton currentUser={ currentUser } post={ post } onLike={ handleLike } onUnlike={ handleUnlike }/>
           <IconButton aria-label="add comment" onClick={ handleExpandComment }>
             <AddCommentIcon />
           </IconButton>
@@ -102,6 +114,7 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
           }
         </CardActions>        
         <CardContent>
+          <Typography variant="subtitle1" color="text.secondary">{ likes.length + ' likes'}</Typography>
           <Typography variant="body1">
             { body }
           </Typography>

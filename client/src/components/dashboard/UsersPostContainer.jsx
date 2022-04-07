@@ -3,8 +3,8 @@ import React from 'react';
 import UsersPostCard from '../post/UsersPostCard';
 import StyledBox from '../styles/StyledBox';
 
-const UsersPostContainer = ({ usersPosts, currentUser }) => {
-  const renderUsersPosts = usersPosts.map(post => <UsersPostCard key={ post.id } post={ post } currentUser={ currentUser }/>)
+const UsersPostContainer = ({ usersPosts, currentUser, onDeletePost }) => {
+  const renderUsersPosts = usersPosts.map(post => <UsersPostCard key={ post.id } post={ post } currentUser={ currentUser } onDeletePost={ onDeletePost }/>)
 
   return (
     <StyledBox width='800px'>
