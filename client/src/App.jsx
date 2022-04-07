@@ -36,9 +36,11 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [posts, setPosts] = useState([])
+  const [followees, setFollowees] = useState([])
 
   console.log("CurrentUser:", currentUser)
   console.log("Posts:", posts)
+  console.log("Followees:", followees)
 
   useEffect(() => {
     const token = localStorage.getItem('jwt')
@@ -73,6 +75,7 @@ const App = () => {
 
   const loginUser = user => {
     setCurrentUser(user)
+    setFollowees(user.followees)
     setLoggedIn(true)
   }
 
@@ -80,6 +83,7 @@ const App = () => {
     setCurrentUser({})
     setLoggedIn(false)
     setPosts([])
+    setFollowees([])
     localStorage.removeItem('jwt')
   }
 
@@ -96,14 +100,18 @@ const App = () => {
     setPosts(updatePosts)
   }
 
+  const handleFollow = user => {
+    setFollowees([...followees, user])
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
           <Route path='/' element={ <Home /> } />
-          <Route path='/posts' element={ <PostPage posts={ posts } currentUser={ currentUser } onDeletePost={ handleDeletePost } /> } />
-          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } onDeletePost={ handleDeletePost }/> }/>
+          <Route path='/posts' element={ <PostPage posts={ posts } currentUser={ currentUser } onDeletePost={ handleDeletePost } onFollow={ handleFollow }/> } />
+          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } onDeletePost={ handleDeletePost } followees={ followees }/> }/>
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
           <Route path='/newpost' element={ <CreatePost currentUser={ currentUser } onNewPost={ handleNewPost } /> } />

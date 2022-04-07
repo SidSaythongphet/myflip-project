@@ -17,6 +17,7 @@ import { Grid } from '@mui/material';
 import AddComment from '../comment/AddComment';
 import CommentContainer from '../comment/CommentContainer';
 import LikeButton from './LikeButton';
+import FollowButton from './FollowButton';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props
@@ -29,7 +30,7 @@ const ExpandMore = styled((props) => {
   })
 }))
 
-const PostCard = ({ post, currentUser, onDeletePost }) => {
+const PostCard = ({ post, currentUser, onDeletePost, onFollow }) => {
   const { id, body, image_url, user } = post
   const [expand, setExpand] = useState(false)
   const [expandComment, setExpandComment] = useState(false)
@@ -78,7 +79,11 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
             />
           }
           action={
-            currentUser.id === user.id ? <DeletePostButton post={ post } onDeletePost={ onDeletePost }/> : null 
+            currentUser.id === user.id 
+            ? 
+            <DeletePostButton post={ post } onDeletePost={ onDeletePost }/> 
+            : 
+            <FollowButton currentUser={ currentUser } post={ post } onFollow={ onFollow } />
           }
           title={ <Typography fontWeight='bold'>{ user.username }</Typography> }
         />

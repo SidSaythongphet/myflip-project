@@ -3,8 +3,9 @@ import { Container, Grid } from '@mui/material';
 import { baseURL } from '../../Globals';
 import UserInfoContainer from './UserInfoContainer';
 import UsersPostContainer from './UsersPostContainer';
+import FollowshipContainer from './FollowshipContainer';
 
-const DashboardPage = ({ currentUser, onUpdateUser, onDeletePost }) => {
+const DashboardPage = ({ currentUser, onUpdateUser, onDeletePost, followees }) => {
   const [usersPosts, setUsersPosts] = useState([])
 
   useEffect(() => {
@@ -37,6 +38,9 @@ const DashboardPage = ({ currentUser, onUpdateUser, onDeletePost }) => {
       <Grid container spacing={2}>
         <Grid item xs={12} container justifyContent="center">
           <UserInfoContainer currentUser={ currentUser } onUpdateUser={ onUpdateUser }/>
+        </Grid>
+        <Grid item xs={12} container justifyContent="center">
+          <FollowshipContainer currentUser={ currentUser } followees={ followees } />
         </Grid>
         <Grid item xs={12} container justifyContent="center">
           <UsersPostContainer usersPosts={ usersPosts } currentUser={ currentUser } onDeletePost={ handleDeleteUsersPost }/>

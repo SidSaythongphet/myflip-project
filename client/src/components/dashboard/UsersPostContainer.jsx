@@ -8,7 +8,7 @@ const UsersPostContainer = ({ usersPosts, currentUser, onDeletePost }) => {
 
   return (
     <StyledBox width='800px'>
-      <Grid container>
+      <Grid container justifyContent='center'>
         { 
           usersPosts.length > 0 
           ? 
