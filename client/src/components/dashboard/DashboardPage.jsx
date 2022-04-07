@@ -1,14 +1,42 @@
-import React from 'react';
-import UserInfoContainer from './UserInfoContainer';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
-import StyledBox from '../styles/StyledBox';
+import { baseURL } from '../../Globals';
+import UserInfoContainer from './UserInfoContainer';
+import UsersPostContainer from './UsersPostContainer';
 
 const DashboardPage = ({ currentUser, onUpdateUser }) => {
+  const [usersPosts, setUsersPosts] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(baseURL + `/api/users/${currentUser.id}/posts`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${ localStorage.getItem('jwt') }`
+        }
+      })
+      const data = await response.json()
+      if (response.ok) {
+        setUsersPosts(data)
+      } else {
+        console.log(data.error)
+      }
+    }
+
+    if (currentUser.id) {
+      fetchData()
+    }
+
+  }, [])
+
   return (
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} container justifyContent="center">
           <UserInfoContainer currentUser={ currentUser } onUpdateUser={ onUpdateUser }/>
+        </Grid>
+        <Grid item xs={12} container justifyContent="center">
+          <UsersPostContainer usersPosts={ usersPosts } currentUser={ currentUser }/>
         </Grid>
       </Grid>
     </Container>
