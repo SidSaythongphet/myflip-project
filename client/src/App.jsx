@@ -6,6 +6,7 @@ import Signup from "./components/authentication/Signup";
 import Navbar from "./components/navigation/Navbar";
 import Home from "./components/static/Home";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import DashboardPage from "./components/dashboard/DashboardPage";
 
 const theme = createTheme({
   palette: {
@@ -69,6 +70,7 @@ const App = () => {
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
           <Route path='/' element={ <Home /> } />
+          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } /> }/>
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
         </Routes>
