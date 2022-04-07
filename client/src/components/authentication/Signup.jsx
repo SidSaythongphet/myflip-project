@@ -4,7 +4,7 @@ import { baseURL, headers } from '../../Globals';
 import { useNavigate } from 'react-router-dom';
 import StyledBox from '../styles/StyledBox';
 
-const Signup = ({ loginUser }) => {
+const Signup = ({ loginUser, loggedIn }) => {
   const [userData, setUserData] = useState({
     first_name: "", 
     last_name: "",
@@ -15,6 +15,12 @@ const Signup = ({ loginUser }) => {
   })
     
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/')
+    }
+  }, [loggedIn])
 
   const handleChange = (e) => {
     setUserData({

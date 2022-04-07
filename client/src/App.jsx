@@ -44,14 +44,20 @@ const App = () => {
     setLoggedIn(true)
   }
 
+  const logoutUser = () => {
+    setCurrentUser({})
+    setLoggedIn(false)
+    localStorage.removeItem('jwt')
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Navbar />
+        <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
           <Route path='/' element={ <Home /> } />
-          <Route path='/signup' element={ <Signup loginUser={ loginUser }/> } />
+          <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login /> } />
         </Routes>
       </Router>
