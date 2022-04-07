@@ -40,6 +40,11 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
     setExpandComment(!expandComment)
   }
 
+  const handleDeleteComment = deletedComment => {
+    const updateComments = comments.filter(comment => comment.id !== deletedComment.id)
+    setComments(updateComments)
+  }
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   }
@@ -105,7 +110,7 @@ const PostCard = ({ post, currentUser, onDeletePost }) => {
           <AddComment post_id={ id } currentUser={ currentUser } onHandleComment={ handleAddComment }/>
         </Collapse>
         <Collapse in={expand} timeout="auto" >
-          { comments.length === 0 ? null : <CommentContainer  comments={ comments }/> }
+          { comments.length === 0 ? null : <CommentContainer  comments={ comments } currentUser={ currentUser } onDeleteComment={ handleDeleteComment }/> }
         </Collapse>
       </Card>
     </Grid>
