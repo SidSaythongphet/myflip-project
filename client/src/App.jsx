@@ -4,6 +4,29 @@ import Login from "./components/authentication/Login";
 import Signup from "./components/authentication/Signup";
 import Navbar from "./components/navigation/Navbar";
 import Home from "./components/static/Home";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#00d4ff',
+      main: '#094f79',
+      dark: '#020024',
+    },
+    secondary: {
+      light: '#ffdd72',
+      main: '#ffd54f',
+      dark: '#b29537',
+    }
+  },
+  typography: {
+    fontFamily: 'Mada',
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700
+  }
+})
 
 const App = () => {
   const [title, setTitle] = useState()
@@ -16,14 +39,16 @@ const App = () => {
 
 
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={ <Home /> } />
-        <Route path='/signup' element={ <Signup /> } />
-        <Route path='/login' element={ <Login /> } />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={ <Home /> } />
+          <Route path='/signup' element={ <Signup /> } />
+          <Route path='/login' element={ <Login /> } />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   )
 }
 
