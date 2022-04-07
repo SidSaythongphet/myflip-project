@@ -7,6 +7,8 @@ import Navbar from "./components/navigation/Navbar";
 import Home from "./components/static/Home";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DashboardPage from "./components/dashboard/DashboardPage";
+import CreatePost from "./components/post/CreatePost";
+import PostPage from "./components/post/PostPage";
 
 const theme = createTheme({
   palette: {
@@ -33,11 +35,22 @@ const theme = createTheme({
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [posts, setPosts] = useState([])
 
   console.log("CurrentUser:", currentUser)
+  console.log("Posts:", posts)
 
   useEffect(() => {
     const token = localStorage.getItem('jwt')
+    const fetchPosts = async () => {
+      const response = await fetch(baseURL + '/api/posts')
+      const data = await response.json()
+      if (response.ok) {
+        setPosts(data)
+      } else {
+        console.log(data.errors)
+      }
+    }
     
     if (token && !loggedIn) {
       fetch(baseURL + '/api/profile', {
@@ -51,6 +64,10 @@ const App = () => {
         loginUser(user)
       })
     }
+
+    if (loggedIn) {
+      fetchPosts()
+    }
     
   }, [loggedIn])
 
@@ -62,11 +79,16 @@ const App = () => {
   const logoutUser = () => {
     setCurrentUser({})
     setLoggedIn(false)
+    setPosts([])
     localStorage.removeItem('jwt')
   }
 
   const handleUpdateUser = (user) => {
     setCurrentUser(user)
+  }
+
+  const handleNewPost = (newPost) => {
+    setPosts([...posts, newPost])
   }
 
   return (
@@ -75,9 +97,11 @@ const App = () => {
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
           <Route path='/' element={ <Home /> } />
+          <Route path='/posts' element={ <PostPage posts={ posts } /> } />
           <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } /> }/>
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
+          <Route path='/newpost' element={ <CreatePost currentUser={ currentUser } onNewPost={ handleNewPost } /> } />
         </Routes>
       </Router>
     </ThemeProvider>

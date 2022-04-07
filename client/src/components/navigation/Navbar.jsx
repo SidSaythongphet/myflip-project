@@ -101,7 +101,7 @@ const Navbar = ({ logoutUser, loggedIn, currentUser }) => {
                     </Link>
                   </MenuItem>
                   <MenuItem onClick={ handleCloseUserMenu } >
-                    <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+                    <Link to='/posts' style={{ textDecoration: 'none', color: 'black' }}>
                       <Avatar sx={{ bgcolor: '#800000' }}><DashboardIcon/></Avatar>
                       <Typography textAlign="center">Posts</Typography>
                     </Link>
