@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       @user.profile_picture.attach(new_profile_picture)
     end
     if @user.update!(user_params)
-      render json: @user, status: :accepted
+      render json: { user: UserSerializer.new(@user) }, status: :accepted
     end
   end
      

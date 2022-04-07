@@ -34,6 +34,8 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
 
+  console.log("CurrentUser:", currentUser)
+
   useEffect(() => {
     const token = localStorage.getItem('jwt')
     
@@ -63,6 +65,10 @@ const App = () => {
     localStorage.removeItem('jwt')
   }
 
+  const handleUpdateUser = (user) => {
+    setCurrentUser(user)
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -70,7 +76,7 @@ const App = () => {
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
           <Route path='/' element={ <Home /> } />
-          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } /> }/>
+          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } /> }/>
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
         </Routes>

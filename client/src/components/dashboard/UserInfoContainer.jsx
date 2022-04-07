@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { baseURL, headers } from '../../Globals';
 import { Avatar, Button, Grid, Stack, TextField, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import StyledBox from '../styles/StyledBox';
+import UpdateProfilePicture from './UpdateProfilePicture';
 
 
-const UserInfoContainer = ({ currentUser }) => {
+const UserInfoContainer = ({ currentUser, onUpdateUser }) => {
   const { id, first_name, last_name, username, email, profile_picture_url} = currentUser
   const [editable, setEditable] = useState(false)
   const [updateForm, setUpdateForm] = useState({
@@ -13,6 +15,7 @@ const UserInfoContainer = ({ currentUser }) => {
     username: username,
     email: email
   })
+  const navigate = useNavigate()
   
   const handleChange = (e) => {
     setUpdateForm({
@@ -34,7 +37,9 @@ const UserInfoContainer = ({ currentUser }) => {
     })
     const data = await response.json()
     if (response.ok) {
-      console.log(data)
+      onUpdateUser(data.user)
+      setEditable(!editable)
+      navigate(`/dashboard/${ updateForm.username }`)
     } else {
       console.log(data)
     }
@@ -46,77 +51,102 @@ const UserInfoContainer = ({ currentUser }) => {
         <Grid item xs={5} container justifyContent="center">
           <Stack alignItems="center" spacing={2}>
             <Avatar alt={ `${first_name} ${last_name}` } src={ profile_picture_url === "" ? "/static/images/avatar/2.jpg" : profile_picture_url } sx={{ width: 200, height: 200 }}/>
+            <UpdateProfilePicture id={ id } onUpdateUser={ onUpdateUser } />
           </Stack>
         </Grid>
         <Grid item xs={7} container sx={{ padding: '10px'}}>
           <Grid item xs={12}>
             <Typography variant="h5">General Account Settings</Typography>
           </Grid>
-          <Grid item xs={12} container>
+          <Grid item xs={12} container height='50px'>
             <Grid item xs={3}>
               <Typography>Name</Typography>
             </Grid>
             <Grid item xs={9} container spacing={1}>
-              <Grid item xs={6}>
-                <TextField 
-                  id="outlined-basic" 
-                  disabled={ !editable ? true : null }
-                  fullWidth 
-                  label="First Name"
-                  variant="outlined" 
-                  size="small" 
-                  name="first_name" 
-                  value={ updateForm.first_name } 
-                  onChange={ handleChange }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField 
-                  id="outlined-basic" 
-                  disabled={ !editable ? true : null }
-                  fullWidth 
-                  label="Last Name" 
-                  variant="outlined" 
-                  size="small" 
-                  name="last_name" 
-                  value={ updateForm.last_name } 
-                  onChange={ handleChange }
-                />
-              </Grid>
+              {
+                !editable
+                ?
+                <Grid item xs={6}>
+                  <Typography>{ first_name } { last_name }</Typography>    
+                </Grid>
+                :
+                <>
+                  <Grid item xs={6}>
+                    <TextField 
+                      id="outlined-basic" 
+                      fullWidth 
+                      label="First Name"
+                      variant="outlined" 
+                      size="small" 
+                      name="first_name" 
+                      value={ updateForm.first_name } 
+                      onChange={ handleChange }
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField 
+                      id="outlined-basic" 
+                      fullWidth 
+                      label="Last Name" 
+                      variant="outlined" 
+                      size="small" 
+                      name="last_name" 
+                      value={ updateForm.last_name } 
+                      onChange={ handleChange }
+                    />
+                  </Grid>
+                </>
+              }
             </Grid>
           </Grid>
-          <Grid item xs={12} container>
+          <Grid item xs={12} container height='50px'>
             <Grid item xs={3}>
               <Typography>Username</Typography>
             </Grid>
             <Grid item xs={9}>
-              <TextField 
-                id="outlined-basic"
-                disabled={ !editable ? true : null }
-                fullWidth 
-                variant="outlined"
-                size="small" 
-                name="username" 
-                value={ updateForm.username } 
-                onChange={ handleChange }
-              />
+              {
+                !editable
+                ?
+                <Grid item xs={6}>
+                  <Typography>{ username }</Typography>    
+                </Grid>
+                :
+                <TextField 
+                  id="outlined-basic"
+                  disabled={ !editable ? true : null }
+                  fullWidth 
+                  variant="outlined"
+                  size="small" 
+                  name="username" 
+                  value={ updateForm.username } 
+                  onChange={ handleChange }
+                />
+              }
             </Grid>
           </Grid>
-          <Grid item xs={12} container>
+          <Grid item xs={12} container height='50px'>
             <Grid item xs={3}>
               <Typography>Email</Typography>
             </Grid>
             <Grid item xs={9}>
-              <TextField 
-                id="outlined-basic"
-                disabled={ !editable ? true : null }
-                fullWidth 
-                variant="outlined"
-                size="small" 
-                name="email" 
-                value={ updateForm.email } 
-                onChange={ handleChange }
-              />
+              {
+                !editable
+                ?
+                <Grid item xs={6}>
+                  <Typography>{ email }</Typography>    
+                </Grid>
+                :
+                <TextField 
+                  id="outlined-basic"
+                  disabled={ !editable ? true : null }
+                  fullWidth 
+                  variant="outlined"
+                  size="small" 
+                  name="email" 
+                  value={ updateForm.email } 
+                  onChange={ handleChange }
+                />
+              }
             </Grid>
           </Grid>
         </Grid>
