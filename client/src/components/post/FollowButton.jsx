@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { baseURL, headers } from '../../Globals';
 import { Button } from '@mui/material';
 
-const FollowButton = ({ currentUser, post, onFollow }) => {
+const FollowButton = ({ currentUser, post, onFollow, onUnfollow }) => {
   const [isFollowing, setIsFollowing] = useState(false)
 
   useEffect(() => {
-    const followees = [...currentUser.followees]
-    const follow = followees.find(follow => follow.id === post.user.id)
+    const follow = currentUser.followees.find(follow => follow.id === post.user.id)
     if (follow) {
       setIsFollowing(true)
     }
-  }, [isFollowing])
+  }, [])
 
   const handleFollow = async () => {
     const strongParams = {
@@ -33,23 +32,30 @@ const FollowButton = ({ currentUser, post, onFollow }) => {
     const data = await response.json()
     if (response.ok) {
       setIsFollowing(true)
+      console.log(data)
       onFollow(data)
     } else {
       console.log(data.error)
     }   
   }
 
-  const handleUnfollow = async (e) => {
+  const handleUnfollow = (e) => {
     e.preventDefault()
-    const response = await fetch(baseURL + `/api/followships/${post.user.id}`, {
+    fetch(baseURL + `/api/followships/${post.user.id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${ localStorage.getItem('jwt') }`
       }
     })
-    if (response.ok) {
-      setIsFollowing(false)
-    }
+    .then(resp => {
+      if (resp.ok) {
+        onUnfollow(post)
+        setIsFollowing(false)
+      } else {
+        //TODO add toast error
+        resp.json().then(console.log)
+      }
+    })
   }
 
   return (

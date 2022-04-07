@@ -101,7 +101,13 @@ const App = () => {
   }
 
   const handleFollow = user => {
-    setFollowees([...followees, user])
+    const userId = {id: user.followee_id}
+    setFollowees([...followees, userId])
+  }
+
+  const handleUnfollow = user => {
+    const updateFollowees = followees.filter(followee => followee.id !== user.id)
+    setFollowees(updateFollowees)
   }
 
   return (
@@ -109,12 +115,40 @@ const App = () => {
       <Router>
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
-          <Route path='/' element={ <Home /> } />
-          <Route path='/posts' element={ <PostPage posts={ posts } currentUser={ currentUser } onDeletePost={ handleDeletePost } onFollow={ handleFollow }/> } />
-          <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } onDeletePost={ handleDeletePost } followees={ followees }/> }/>
-          <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
-          <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
-          <Route path='/newpost' element={ <CreatePost currentUser={ currentUser } onNewPost={ handleNewPost } /> } />
+          <Route
+            path='/' 
+            element={ <Home /> } 
+          />
+          <Route 
+            path='/posts' 
+            element={ 
+              <PostPage posts={ posts } currentUser={ currentUser } onDeletePost={ handleDeletePost } onFollow={ handleFollow } onUnfollow={ handleUnfollow }/> 
+            } 
+          />
+          <Route 
+            path='/dashboard/:username' 
+            element={ 
+              <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } onDeletePost={ handleDeletePost } followees={ followees }/> 
+            }
+          />
+          <Route 
+            path='/signup' 
+            element={ 
+              <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> 
+            } 
+          />
+          <Route 
+            path='/login' 
+            element={ 
+              <Login loginUser={ loginUser } loggedIn={ loggedIn } /> 
+            } 
+          />
+          <Route 
+            path='/newpost' 
+            element={ 
+              <CreatePost currentUser={ currentUser } onNewPost={ handleNewPost } /> 
+            } 
+          />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -17,7 +17,8 @@ const DeletePostButton = ({ post, onDeletePost }) => {
     setAnchorMenu(null)
   }
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault()
     fetch(baseURL + `/api/posts/${post.id}`, {
       method: "DELETE",
       headers: {

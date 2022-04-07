@@ -30,7 +30,7 @@ const ExpandMore = styled((props) => {
   })
 }))
 
-const PostCard = ({ post, currentUser, onDeletePost, onFollow }) => {
+const PostCard = ({ post, currentUser, onDeletePost, onFollow, onUnfollow }) => {
   const { id, body, image_url, user } = post
   const [expand, setExpand] = useState(false)
   const [expandComment, setExpandComment] = useState(false)
@@ -83,7 +83,7 @@ const PostCard = ({ post, currentUser, onDeletePost, onFollow }) => {
             ? 
             <DeletePostButton post={ post } onDeletePost={ onDeletePost }/> 
             : 
-            <FollowButton currentUser={ currentUser } post={ post } onFollow={ onFollow } />
+            <FollowButton currentUser={ currentUser } post={ post } onFollow={ onFollow } onUnfollow={ onUnfollow } />
           }
           title={ <Typography fontWeight='bold'>{ user.username }</Typography> }
         />

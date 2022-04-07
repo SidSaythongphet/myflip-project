@@ -57,6 +57,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_212423) do
     t.integer "followee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_followships_on_followee_id"
+    t.index ["follower_id", "followee_id"], name: "index_followships_on_follower_id_and_followee_id", unique: true
+    t.index ["follower_id"], name: "index_followships_on_follower_id"
   end
 
   create_table "likes", force: :cascade do |t|

@@ -28,4 +28,17 @@ class User < ApplicationRecord
     end
   end
   
+  def follow(followee)
+    active_followships.create!(followee_id: followee.id)
+  end
+
+  def unfollow(followee)
+    @followship = active_followships.find_by(followee_id: followee.id)
+    @followship.destroy
+  end
+
+  def following?(followee)
+    self.followees.include?(followee)
+  end
+
 end

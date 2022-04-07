@@ -1,7 +1,7 @@
 class FollowshipsController < ApplicationController
   def create
     @followship = Followship.create!(follow_params)
-    render json: @followship, status: :created
+    render json: @followship, except: [:id, :created_at, :updated_at], status: :created
   rescue ActiveRecord::RecordNotUnique => e    
     render json: { e: "Already following" }, status: :unprocessable_entity
   end
