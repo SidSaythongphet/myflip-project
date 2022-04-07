@@ -9,7 +9,7 @@ class PostsController < ApplicationController
       else
           @posts = Post.all
       end
-      render json: @posts, status: :ok
+      render json: @posts, include: ['user', 'comments', 'comments.user'], status: :ok
   end
 
   def show
