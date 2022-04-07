@@ -30,12 +30,19 @@ const theme = createTheme({
 
 const App = () => {
   const [title, setTitle] = useState()
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [currentUser, setCurrentUser] = useState({})
 
   useEffect(() => {
     fetch("/api/")
       .then((r) => r.json())
       .then((data) => setTitle(data.server));
   }, []);
+
+  const loginUser = user => {
+    setCurrentUser(user)
+    setLoggedIn(true)
+  }
 
 
   return (
@@ -44,7 +51,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path='/' element={ <Home /> } />
-          <Route path='/signup' element={ <Signup /> } />
+          <Route path='/signup' element={ <Signup loginUser={ loginUser }/> } />
           <Route path='/login' element={ <Login /> } />
         </Routes>
       </Router>

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  wrap_parameters format: [:json]
+  wrap_parameters :user, include: [:first_name, :last_name, :username, :email, :password, :password_confirmation, :profile_picture]
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
   skip_before_action :authorized, only: [:create]
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:first_name, :last_name, :username, :email, :password, :password_confirmation, :profile_picture)
+    params.require(:user).permit(:first_name, :last_name, :username, :email, :password, :password_confirmation, :profile_picture)
   end
 
   def render_unprocessable_entity_response(invalid)
