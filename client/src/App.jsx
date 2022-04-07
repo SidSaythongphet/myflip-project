@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { baseURL } from "./Globals";
 import Login from "./components/authentication/Login";
 import Signup from "./components/authentication/Signup";
 import Navbar from "./components/navigation/Navbar";
@@ -29,15 +30,26 @@ const theme = createTheme({
 })
 
 const App = () => {
-  const [title, setTitle] = useState()
   const [loggedIn, setLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
 
   useEffect(() => {
-    fetch("/api/")
-      .then((r) => r.json())
-      .then((data) => setTitle(data.server));
-  }, []);
+    const token = localStorage.getItem('jwt')
+    
+    if (token && !loggedIn) {
+      fetch(baseURL + '/api/profile', {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${ token }`
+        }
+      })
+      .then(resp => resp.json())
+      .then(user => {
+        loginUser(user)
+      })
+    }
+    
+  }, [loggedIn])
 
   const loginUser = user => {
     setCurrentUser(user)
@@ -58,7 +70,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={ <Home /> } />
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
-          <Route path='/login' element={ <Login /> } />
+          <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
         </Routes>
       </Router>
     </ThemeProvider>
