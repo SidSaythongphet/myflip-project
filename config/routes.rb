@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :likes
   
   scope :api do
     resources :users, only: [:index, :create, :update, :destroy]
