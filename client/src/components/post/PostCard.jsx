@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,10 +8,11 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import DeletePostButton from './DeletePostButton';
 import Switch from '@mui/material/Switch';
 import { Grid } from '@mui/material';
 
-const PostCard = ({ post, currentUser }) => {
+const PostCard = ({ post, currentUser, onDeletePost }) => {
   const { id, body, image_url, user } = post
   const [checked, setChecked] = useState(false)
 
@@ -28,6 +28,9 @@ const PostCard = ({ post, currentUser }) => {
             <Avatar
               src={ user.profile_picture_url ? user.profile_picture_url  : null }
             />
+          }
+          action={
+            currentUser.id === user.id ? <DeletePostButton post={ post } onDeletePost={ onDeletePost }/> : null 
           }
           title={ <Typography>{ user.username }</Typography> }
         />

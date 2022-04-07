@@ -91,13 +91,18 @@ const App = () => {
     setPosts([...posts, newPost])
   }
 
+  const handleDeletePost = (deletedPost) => {
+    const updatePosts = posts.filter(post => post.id !== deletedPost.id)
+    setPosts(updatePosts)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
         <Routes>
           <Route path='/' element={ <Home /> } />
-          <Route path='/posts' element={ <PostPage posts={ posts } /> } />
+          <Route path='/posts' element={ <PostPage posts={ posts } currentUser={ currentUser } onDeletePost={ handleDeletePost } /> } />
           <Route path='/dashboard/:username' element={ <DashboardPage currentUser={ currentUser } onUpdateUser={ handleUpdateUser } /> }/>
           <Route path='/signup' element={ <Signup loginUser={ loginUser } loggedIn={ loggedIn }/> } />
           <Route path='/login' element={ <Login loginUser={ loginUser } loggedIn={ loggedIn } /> } />
