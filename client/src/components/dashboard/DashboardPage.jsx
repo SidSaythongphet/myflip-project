@@ -23,9 +23,9 @@ const DashboardPage = ({ currentUser, onUpdateUser }) => {
       }
     }
 
-    if (currentUser.id) {
+    // if (currentUser.id) {
       fetchData()
-    }
+    // }
 
   }, [])
 
