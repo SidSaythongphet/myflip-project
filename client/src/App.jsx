@@ -92,7 +92,7 @@ const App = () => {
   }
 
   const handleNewPost = (newPost) => {
-    setPosts([...posts, newPost])
+    setPosts([newPost, ...posts ])
   }
 
   const handleDeletePost = (deletedPost) => {

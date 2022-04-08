@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Switch from '@mui/material/Switch';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Stack } from '@mui/material';
+import { Stack, Grid } from '@mui/material';
 import DeletePostButton from './DeletePostButton';
 
 const UsersPostCard = ({ post, currentUser, onDeletePost }) => {
@@ -12,30 +12,32 @@ const UsersPostCard = ({ post, currentUser, onDeletePost }) => {
   const [checked, setChecked] = useState(false)
 
   return (
-    <Card sx={{ maxWidth: 300 }}>
-      <CardMedia
-        component="img"
-        height="400"
-        image={ image_url[!checked ? 0 : 1] }
-        alt={ currentUser.first_name + "'s image" }
-      />
-      <Stack direction='row' justifyContent='space-between'>
-        <Switch
-          checked={checked}
-          onChange={ (e) => setChecked(e.target.checked) }
-          inputProps={{ 'aria-label': 'controlled' }}
+    <Grid item>
+      <Card sx={{ maxWidth: 300 }}>
+        <CardMedia
+          component="img"
+          height="400"
+          image={ image_url[!checked ? 0 : 1] }
+          alt={ currentUser.first_name + "'s image" }
         />
-        <Typography variant="body1" alignSelf='center'>
-          { likes.length } likes
-        </Typography>
-        <DeletePostButton post={ post } onDeletePost={ onDeletePost } />
-      </Stack>
-      <CardContent>
-        <Typography variant="body1" color="text.secondary">
-          { body }
-        </Typography>
-      </CardContent>  
-    </Card>
+        <Stack direction='row' justifyContent='space-between'>
+          <Switch
+            checked={checked}
+            onChange={ (e) => setChecked(e.target.checked) }
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+          <Typography variant="body1" alignSelf='center'>
+            { likes.length } likes
+          </Typography>
+          <DeletePostButton post={ post } onDeletePost={ onDeletePost } />
+        </Stack>
+        <CardContent>
+          <Typography variant="body1" color="text.secondary">
+            { body }
+          </Typography>
+        </CardContent>  
+      </Card>
+    </Grid>
   )
 }
 

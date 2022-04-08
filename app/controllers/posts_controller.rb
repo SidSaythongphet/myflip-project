@@ -5,9 +5,9 @@ class PostsController < ApplicationController
   def index
       if params[:user_id]
           user = User.find(params[:user_id])
-          @posts = user.posts
+          @posts = user.posts.reverse
       else
-          @posts = Post.all
+          @posts = Post.all.reverse
       end
       render json: @posts, include: ['user', 'comments', 'comments.user', 'likes'], status: :ok
   end

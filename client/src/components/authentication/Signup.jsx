@@ -41,7 +41,7 @@ const Signup = ({ loginUser, loggedIn }) => {
     if (response.ok) {
       loginUser(data.user)
       localStorage.setItem('jwt', data.token)
-      navigate(`/`)
+      navigate(`/posts`)
     } else {
       console.log(data)
     }

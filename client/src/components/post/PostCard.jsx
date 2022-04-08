@@ -93,16 +93,16 @@ const PostCard = ({ post, currentUser, onDeletePost, onFollow, onUnfollow }) => 
           image={ image_url[!checked ? 0 : 1] }
           alt={ user.first_name + "'s image" }
         />
-        <Switch
-          checked={checked}
-          onChange={handleChange}
-          inputProps={{ 'aria-label': 'controlled' }}
-        />  
         <CardActions disableSpacing>
-        <LikeButton currentUser={ currentUser } post={ post } onLike={ handleLike } onUnlike={ handleUnlike }/>
+          <LikeButton currentUser={ currentUser } post={ post } onLike={ handleLike } onUnlike={ handleUnlike }/>
           <IconButton aria-label="add comment" onClick={ handleExpandComment }>
             <AddCommentIcon />
           </IconButton>
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />  
           {
             comments.length === 0 
             ?
