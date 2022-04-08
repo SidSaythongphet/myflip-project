@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { baseURL, headers } from '../../Globals';
 import { Button } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FollowButton = ({ currentUser, post, onFollow, onUnfollow }) => {
   const [isFollowing, setIsFollowing] = useState(false)
@@ -32,10 +34,10 @@ const FollowButton = ({ currentUser, post, onFollow, onUnfollow }) => {
     const data = await response.json()
     if (response.ok) {
       setIsFollowing(true)
-      console.log(data)
+      toast(`You are now following ${ post.user.username }`)
       onFollow(data)
     } else {
-      console.log(data.error)
+      toast.error(`You are already following ${ post.user.username }`)
     }   
   }
 
@@ -50,10 +52,11 @@ const FollowButton = ({ currentUser, post, onFollow, onUnfollow }) => {
     .then(resp => {
       if (resp.ok) {
         onUnfollow(post)
+        toast(`You no longer follow ${ post.user.username }`)
         setIsFollowing(false)
       } else {
         //TODO add toast error
-        resp.json().then(console.log)
+        toast.error(`You cannot do that.`)
       }
     })
   }

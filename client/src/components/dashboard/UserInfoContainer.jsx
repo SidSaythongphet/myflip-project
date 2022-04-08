@@ -4,7 +4,8 @@ import { Avatar, Button, Grid, Stack, TextField, Typography } from '@mui/materia
 import { useNavigate } from 'react-router-dom';
 import StyledBox from '../styles/StyledBox';
 import UpdateProfilePicture from './UpdateProfilePicture';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserInfoContainer = ({ currentUser, onUpdateUser }) => {
   const { id, first_name, last_name, username, email, profile_picture_url} = currentUser
@@ -40,6 +41,7 @@ const UserInfoContainer = ({ currentUser, onUpdateUser }) => {
       onUpdateUser(data.user)
       setEditable(!editable)
       navigate(`/dashboard/${ updateForm.username }`)
+      toast.success('Account information updated.')
     } else {
       console.log(data)
     }
@@ -150,9 +152,19 @@ const UserInfoContainer = ({ currentUser, onUpdateUser }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item justifySelf="end">
-          <Button onClick={ (e) => setEditable(!editable) }>{ !editable ? "Edit" : "Cancel" }</Button>
-          {editable ? <Button onClick={ handleSubmit }>Submit</Button> : null }
+        <Grid item container justifyContent='flex-end' spacing={1}>
+          {
+            editable 
+            ? 
+            <Grid item>
+              <Button onClick={ handleSubmit } variant="contained">Submit</Button> 
+            </Grid>  
+            : 
+            null 
+          }
+          <Grid item>
+            <Button onClick={ (e) => setEditable(!editable) } variant="contained">{ !editable ? "Edit" : "Cancel" }</Button>
+          </Grid>
         </Grid>
       </Grid>
     </StyledBox>

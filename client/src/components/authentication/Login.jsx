@@ -3,6 +3,8 @@ import { Button, TextField, Grid, Typography } from '@mui/material';
 import { baseURL, headers } from '../../Globals';
 import { useNavigate } from 'react-router-dom';
 import StyledBox from '../styles/StyledBox';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = ({ loginUser, loggedIn }) => {
   const [username, setUsername] = useState('')
@@ -36,7 +38,7 @@ const Login = ({ loginUser, loggedIn }) => {
       localStorage.setItem('jwt', data.token)
       navigate(`/posts`)
     } else {
-      console.log(data)
+      toast.error(data.errors[0])
     }
   }
     

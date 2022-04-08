@@ -3,6 +3,8 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import { baseURL, headers } from '../../Globals';
 import { useNavigate } from 'react-router-dom';
 import StyledBox from '../styles/StyledBox';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = ({ loginUser, loggedIn }) => {
   const [userData, setUserData] = useState({
@@ -43,9 +45,10 @@ const Signup = ({ loginUser, loggedIn }) => {
       localStorage.setItem('jwt', data.token)
       navigate(`/posts`)
     } else {
-      console.log(data)
+      data.errors.map(err => toast.error(err))
     }
   }
+  
   return (
     <Grid container justifyContent="center">
       <Grid item>

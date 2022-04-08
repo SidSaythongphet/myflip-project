@@ -8,6 +8,8 @@ import { fileChecksum } from '../utils/checksum';
 import { baseURL, headers } from '../../Globals';
 import CircularProgress from '@mui/material/CircularProgress';
 import { CardMedia, Grid } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateProfilePicture = ({ id, onUpdateUser }) => {
   const [open, setOpen] = useState(false);
@@ -33,6 +35,11 @@ const UpdateProfilePicture = ({ id, onUpdateUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (file === null) {
+      setOpen(false)
+      return
+    }
     setUploading(true)
     
     const checksum = await fileChecksum(file)
@@ -81,6 +88,7 @@ const UpdateProfilePicture = ({ id, onUpdateUser }) => {
       onUpdateUser(data.user)
       setOpen(false)
       setUploading(false)
+      toast.success('Profile picture has been updated.')
     } else {
       console.log(data)
       setUploading(false)
@@ -89,7 +97,7 @@ const UpdateProfilePicture = ({ id, onUpdateUser }) => {
   
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="contained" onClick={handleClickOpen}>
         Add or Update Profile Picture
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -119,8 +127,8 @@ const UpdateProfilePicture = ({ id, onUpdateUser }) => {
           </Grid>
           <Grid item>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={handleClose} variant="contained">Cancel</Button>
+              <Button onClick={handleSubmit} variant="contained">Submit</Button>
               { uploading ? <CircularProgress /> : null }
             </DialogActions>
           </Grid>

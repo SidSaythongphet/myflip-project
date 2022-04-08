@@ -9,6 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DashboardPage from "./components/dashboard/DashboardPage";
 import CreatePost from "./components/post/CreatePost";
 import PostPage from "./components/post/PostPage";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const theme = createTheme({
   palette: {
@@ -114,6 +116,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Navbar logoutUser={ logoutUser } loggedIn={ loggedIn } currentUser={ currentUser } />
+        <ToastContainer />
         <Routes>
           <Route
             path='/' 

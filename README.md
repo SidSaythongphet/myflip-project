@@ -2,11 +2,15 @@
 
 ## Overview
 
+myFlip - Fullstack project
+
 ### Frontend
 React.js
 
 ### Backend
 Ruby on Rails API for myFlip. In addition, Amazon Web Services S3 is used to store images.
+
+### About
 
 MyFlip is intended to be a social media project using React.js, inspired by instagram and pinterest. The user is able to upload images of something they have transformed. Whether that be a redecorated space, refurbished furniture, new hair style, and so on. Each post the user creates, will include a before image, after image, and an optional message to describe the transformed item. Other users will be able to like individual posts and follow specific people.
 

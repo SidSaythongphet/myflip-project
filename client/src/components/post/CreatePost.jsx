@@ -4,6 +4,8 @@ import { baseURL, headers } from '../../Globals';
 import { useNavigate } from 'react-router-dom';
 import StyledBox from '../styles/StyledBox';
 import { fileChecksum } from '../utils/checksum';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreatePost = ({ currentUser, onNewPost }) => {
   const [body, setBody] = useState('')
@@ -28,6 +30,12 @@ const CreatePost = ({ currentUser, onNewPost }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (before === null || after === null) {
+      toast.error('Missing image')
+      return
+    }
+
     setUploading(true)
 
     // POST request to API for authorized URL
@@ -99,14 +107,14 @@ const CreatePost = ({ currentUser, onNewPost }) => {
       body: JSON.stringify(strongParams)
       })
 
-      const data = await response.json()
-      if (response.ok) {
-        setUploading(false)
-        onNewPost(data)
-        navigate('/posts')
-      } else {
-        console.log(data)
-      }
+    const data = await response.json()
+    if (response.ok) {
+      setUploading(false)
+      onNewPost(data)
+      navigate('/posts')
+    } else {
+      console.log(data)
+    }
   }
 
   return (
